@@ -1,0 +1,36 @@
+~~~~~~~~~~~~~~~~~~~~~~
+MVP
+~~~~~~~~~~~~~~~~~~~~~~
+    [ ] AI
+    [ ] Stats
+        [x] Strength
+        [ ] Attack Power Calculation
+        [ ] Crit Chance Calculation
+        [x] HP
+        [~] Defence
+    [x] Special Skill
+    [ ] Reduce Damage Skill
+    [x] Win State
+    [x] Lose State
+    [ ] Menu
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+Concepts / Goals
+~~~~~~~~~~~~~~~~~~~~~~
+    [ ] Database
+    [ ] Multiplayer
+        [ ] ELO
+        [ ] Matchmaking
+        [ ] Friends List
+        [ ] Direct Challenge
+        [ ] Chat
+        [ ] Win Rewards
+    [ ] Multiple Weapons
+    [ ] Multiple Armor
+    [ ] Magic
+    [ ] Ranged
+    [ ] Currency System w/ Shop
+    [ ] Risk Factor? (i.e. Upon losing, you lose an item)
+    [ ] Guilds
+    [ ] Stats Gains

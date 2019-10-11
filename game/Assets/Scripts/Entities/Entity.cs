@@ -12,6 +12,13 @@ namespace ArenaGame
         public long ID;
         public int HP;
         public int Strength;
+        public int Defence;
+
+        private int energy = 100;
+        private bool specialUsed = false;
+        private int energyRechargePerTick = 5;
+        private float energyTimer;
+        private float energyTickRate = 4f;
 
         [SerializeField]
         TestPlayerRepository playerDatabase;
@@ -27,6 +34,7 @@ namespace ArenaGame
 
         // player
         private TextMeshProUGUI playerHP;
+        private TextMeshProUGUI playerEnergy;
 
         // UI
         [SerializeField]
@@ -54,6 +62,7 @@ namespace ArenaGame
 
                 enemyHP = GameObject.Find("EnemyHPTMP").GetComponent<TextMeshProUGUI>();
                 playerHP = GameObject.Find("PlayerHPTMP").GetComponent<TextMeshProUGUI>();
+                playerEnergy = GameObject.Find("PlayerEnergyTMP").GetComponent<TextMeshProUGUI>();
 
                 if (tarID == this.ID)
                 {
@@ -67,6 +76,7 @@ namespace ArenaGame
                 entityTarget = target.GetComponent<Entity>();
 
                 playerHP.text = HP.ToString();
+                playerEnergy.text = energy.ToString();
                 enemyHP.text = entityTarget.HP.ToString();
 
 
@@ -82,10 +92,13 @@ namespace ArenaGame
             {
                 HP = 100;
                 entityTarget.HP = 100;
+                energy = 100;
+                specialUsed = false;
             }
 
             // TEST TOOL
 
+            // Attack entity
             if (attackTimer >= 3f && entityTarget.HP > 0 && HP > 0)
             {
                 entityAnimator.SetTrigger("attacking");
@@ -93,6 +106,29 @@ namespace ArenaGame
                 attackTimer = 0f;
                 
             }
+
+            // Recharge Energy
+            if (energy < 100)
+            {
+                if (energyTimer >= energyTickRate)
+                {
+                    // Tick
+                    int regen = energy += energyRechargePerTick;
+                    if (regen >= 100)
+                    {
+                        energy = 100;
+                    }
+                    else 
+                    {
+                        energy += energyRechargePerTick;
+                    }
+                    playerEnergy.text = energy.ToString();
+                    energyTimer = 0f;
+                }
+            }
+
+            // timers
+            energyTimer += Time.fixedDeltaTime;
             attackTimer += Time.fixedDeltaTime;
 
         }
@@ -100,6 +136,18 @@ namespace ArenaGame
         private void damageTarget()
         {
             int dmg = (Random.Range(0, 10) * Strength) / 3;
+            if (specialUsed)
+            {
+                dmg = ((Random.Range(0, 10) * Strength) / 3) + 7 * 3;
+                specialUsed = false;
+            }
+            dmg -= entityTarget.Defence / 3;
+
+            if (dmg < 0)
+            {
+                dmg = 0;
+            }
+
             if (entityTarget.HP - dmg <= 0)
             {
                 entityTarget.HP -= entityTarget.HP;
@@ -110,7 +158,7 @@ namespace ArenaGame
             }
 
             enemyHP.text = entityTarget.HP.ToString();
-            Debug.Log(Name + " HP: " + HP + " // " + entityTarget.Name + " HP: " + entityTarget.HP);
+            //Debug.Log(Name + " HP: " + HP + " // " + entityTarget.Name + " HP: " + entityTarget.HP);
 
             float posY = entityTarget.transform.position.y;
             Transform damagePopupTransform = Instantiate(DamagePopupPrefab, new Vector3(entityTarget.transform.position.x, posY += 1.5f, 0), Quaternion.identity);
@@ -126,6 +174,26 @@ namespace ArenaGame
             }
             
 
+        }
+
+        public void SpecialAttack()
+        {
+            if (energy >= 45 && specialUsed == false)
+            {
+                // cost of energy to do the attack
+                energy -= 45;
+                specialUsed = true;
+                playerEnergy.text = energy.ToString();
+
+            }
+            else if (energy < 45)
+            {
+                Debug.Log("Not enough energy!");
+            }
+            else
+            {
+                Debug.Log("Special is already activated!");
+            }
         }
 
         private void LoadPlayerData(long ID)

@@ -46,8 +46,9 @@ namespace ArenaGame
         public Entity GenerateStats(Entity player)
         {
             Entity newPlayer = player;
-            newPlayer.Strength = 10 + (int)player.ID;
+            newPlayer.Strength = Random.Range(8, 12);
             newPlayer.HP = 100 + (int)player.ID;
+            newPlayer.Defence = Random.Range(7,14);
             
             return newPlayer;
         }
