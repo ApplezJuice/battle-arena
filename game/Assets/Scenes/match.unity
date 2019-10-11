@@ -203,6 +203,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &811341540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000013301305156, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1129346743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &811341541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811341540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc50b85a0ce789745972f71377e56144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: MikeH
+  ID: 0
+  HP: 0
+  Strength: 0
+  playerDatabase: {fileID: 1330407340}
 --- !u!1001 &925309212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -212,6 +235,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000011821036864, guid: 5b210609803658e488f512fc13a6163e, type: 3}
       propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011821036864, guid: 5b210609803658e488f512fc13a6163e, type: 3}
+      propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4000011826580284, guid: 5b210609803658e488f512fc13a6163e, type: 3}
@@ -283,6 +310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1000013301305156, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: m_TagString
+      value: Player2
+      objectReference: {fileID: 0}
     - target: {fileID: 4000010470550876, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.4
@@ -341,3 +372,70 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+--- !u!1 &1330407339
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1330407341}
+  - component: {fileID: 1330407340}
+  m_Layer: 0
+  m_Name: RepoTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1330407340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330407339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d757494b6843b5a4b82993c63918ccae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entities: []
+--- !u!4 &1330407341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330407339}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.026219, y: 0.02809939, z: -0.82421875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1649072178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000011821036864, guid: 5b210609803658e488f512fc13a6163e,
+    type: 3}
+  m_PrefabInstance: {fileID: 925309212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1649072181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649072178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc50b85a0ce789745972f71377e56144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: TestEnemy
+  ID: 0
+  HP: 0
+  Strength: 0
+  playerDatabase: {fileID: 1330407340}
