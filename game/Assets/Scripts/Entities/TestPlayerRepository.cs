@@ -25,7 +25,7 @@ namespace ArenaGame
 
             // add the id / name to the dictionary
             playerID.Add(newPlayerID, name);
-            Debug.Log("Player ID: " + newPlayerID + " / Player Name: " + name);
+            //Debug.Log("Player ID: " + newPlayerID + " / Player Name: " + name);
 
             return newPlayerID;
         }
