@@ -6,6 +6,8 @@ namespace ArenaGame
 {
     public class ActionBar : MonoBehaviour
     {
+        [SerializeField]
+        public GameObject playerStatsBox;
         Entity playerEntity;
 
         // Start is called before the first frame update
@@ -32,6 +34,11 @@ namespace ArenaGame
         public void BlockClicked()
         {
             Debug.Log("Block Clicked");
+        }
+
+        public void CharacterSheetClicked()
+        {
+            playerStatsBox.SetActive(!playerStatsBox.activeInHierarchy);
         }
     }
 }

@@ -39,6 +39,10 @@ namespace ArenaGame
         // UI
         [SerializeField]
         private Transform DamagePopupPrefab;
+        [SerializeField]
+        public GameObject winStateUI;
+        [SerializeField]
+        public GameObject loseStateUI;
 
 
         float attackTimer;
@@ -69,6 +73,8 @@ namespace ArenaGame
                     enemyHP = GameObject.Find("PlayerHPTMP").GetComponent<TextMeshProUGUI>();
                     playerHP = GameObject.Find("EnemyHPTMP").GetComponent<TextMeshProUGUI>();
 
+                    //playerEnergy = GameObject.Find("EnemyEnergyTMP").GetComponent<TextMeshProUGUI>();
+
                     target = GameObject.FindGameObjectWithTag("Player2");
                     tarID = target.GetComponent<Entity>().ID;
                 }
@@ -90,16 +96,14 @@ namespace ArenaGame
             // ~~~~~~~~ RESTART GAME
             if (Input.GetKeyDown(KeyCode.R))
             {
-                HP = 100;
-                entityTarget.HP = 100;
-                energy = 100;
-                specialUsed = false;
+                resetGame();
             }
 
             // TEST TOOL
 
+
             // Attack entity
-            if (attackTimer >= 3f && entityTarget.HP > 0 && HP > 0)
+            if (attackTimer >= 1.5f && entityTarget.HP > 0 && HP > 0)
             {
                 entityAnimator.SetTrigger("attacking");
                 damageTarget();
@@ -112,25 +116,55 @@ namespace ArenaGame
             {
                 if (energyTimer >= energyTickRate)
                 {
-                    // Tick
-                    int regen = energy += energyRechargePerTick;
-                    if (regen >= 100)
-                    {
-                        energy = 100;
-                    }
-                    else 
-                    {
-                        energy += energyRechargePerTick;
-                    }
-                    playerEnergy.text = energy.ToString();
+                    regenEnergyTick();
                     energyTimer = 0f;
                 }
             }
 
             // timers
-            energyTimer += Time.fixedDeltaTime;
-            attackTimer += Time.fixedDeltaTime;
+            energyTimer += Time.deltaTime;
+            attackTimer += Time.deltaTime;
 
+        }
+
+        private void GameWin()
+        {
+            winStateUI.SetActive(true);
+        }
+
+        private void GameLose()
+        {
+            loseStateUI.SetActive(true);
+        }
+
+        private void resetGame()
+        {
+            winStateUI.SetActive(false);
+            loseStateUI.SetActive(false);
+
+            HP = 100;
+            entityTarget.HP = 100;
+            energy = 100;
+            specialUsed = false;
+
+            playerHP.text = HP.ToString();
+            playerEnergy.text = energy.ToString();
+            enemyHP.text = entityTarget.HP.ToString();
+        }
+
+        private void regenEnergyTick()
+        {
+            // Tick
+            int regen = energy + energyRechargePerTick;
+            if (regen >= 100)
+            {
+                energy = 100;
+            }
+            else
+            {
+                energy += energyRechargePerTick;
+            }
+            playerEnergy.text = energy.ToString();
         }
 
         private void damageTarget()
@@ -151,6 +185,14 @@ namespace ArenaGame
             if (entityTarget.HP - dmg <= 0)
             {
                 entityTarget.HP -= entityTarget.HP;
+                if (target.name == "Enemy")
+                {
+                    winStateUI.SetActive(true);
+                }
+                else
+                {
+                    loseStateUI.SetActive(true);
+                }
             }
             else
             {
