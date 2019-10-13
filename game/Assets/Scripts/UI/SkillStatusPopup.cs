@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DamagePopup : MonoBehaviour
+public class SkillStatusPopup : MonoBehaviour
 {
     private TextMeshPro tmp;
     private float lifetime;
@@ -12,54 +12,33 @@ public class DamagePopup : MonoBehaviour
 
     private const float DISAPPEAR_TIMER_MAX = 1f;
 
-    private void Awake()
+    // Start is called before the first frame update
+    void Awake()
     {
         tmp = transform.GetComponent<TextMeshPro>();
     }
-    public void Setup(int dmg, bool critical, bool hasBlocked)
+
+    public void Setup(string message)
     {
-        tmp.SetText(dmg.ToString());
-        if (hasBlocked)
-        {
-            textColor = Color.cyan;
-            tmp.fontSize = 6;
-
-        }
-        else if (!critical)
-        {
-            textColor = new Color(219f / 255f , 167f / 255f, 20f / 255f);
-            tmp.fontSize = 5;
-        }
-        else if (critical)
-        {
-            textColor = Color.red;
-            tmp.fontSize = 7;
-        }
-        
-
-        tmp.color = textColor;
-        
+        textColor = tmp.color;
+        tmp.SetText(message);
         lifetime = DISAPPEAR_TIMER_MAX;
-
-        moveVector = new Vector3(Random.Range(-.7f, .7f), 1) * 7f;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        transform.position += moveVector * Time.deltaTime;
-        moveVector -= moveVector * 8f * Time.deltaTime;
-
         if (lifetime > (DISAPPEAR_TIMER_MAX / 2))
         {
             // first half of popup
-            float increaseScaleAmount = 1f;
+            float increaseScaleAmount = .2f;
             transform.localScale += Vector3.one * increaseScaleAmount * Time.deltaTime;
         }
         else
         {
             // 2nd half
-            float decreaseScaleAmount = 1f;
-            transform.localScale -= Vector3.one * decreaseScaleAmount * Time.deltaTime;
+            //float decreaseScaleAmount = .2f;
+            //transform.localScale -= Vector3.one * decreaseScaleAmount * Time.deltaTime;
         }
 
         lifetime -= Time.deltaTime;

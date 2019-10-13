@@ -1,18 +1,18 @@
 ~~~~~~~~~~~~~~~~~~~~~~
 MVP
 ~~~~~~~~~~~~~~~~~~~~~~
-    [ ] AI
+    [x] AI
     [ ] Stats
         [x] Strength
         [ ] Attack Power Calculation
         [ ] Crit Chance Calculation
         [x] HP
-        [~] Defence
+        [x] Defence
     [x] Special Skill
-    [ ] Reduce Damage Skill
+    [x] Reduce Damage Skill
     [x] Win State
     [x] Lose State
-    [ ] Menu
+    [x] Menu
 
 
 ~~~~~~~~~~~~~~~~~~~~~~

@@ -33,12 +33,20 @@ namespace ArenaGame
         }
         public void BlockClicked()
         {
-            Debug.Log("Block Clicked");
+            if (playerEntity)
+            {
+                playerEntity.BlockSpecial();
+            }
         }
 
         public void CharacterSheetClicked()
         {
             playerStatsBox.SetActive(!playerStatsBox.activeInHierarchy);
+        }
+
+        public void HealthPotionUsed()
+        {
+            playerEntity.UsePotion();
         }
     }
 }
