@@ -50,11 +50,17 @@ namespace ArenaGame
 
         float attackTimer;
 
+        [SerializeField]
+        public Scoreboard scoreBoard;
+        [SerializeField]
+        public NextRoundMenu endRoundMenu;
+
         private void Awake()
         {
             Strength = Random.Range(8, 12);
             HP = 100;
             Defence = Random.Range(7, 14);
+            HPPotionCount = 1;
         }
 
         // Start is called before the first frame update
@@ -108,6 +114,7 @@ namespace ArenaGame
             HP = 100;
             energy = 100;
             specialUsed = false;
+            HPPotionCount = 1;
 
             playerHP.text = HP.ToString();
             //playerEnergy.text = energy.ToString();
@@ -130,7 +137,20 @@ namespace ArenaGame
                 // Player beats AI
                 HP = 0;
                 playerHP.text = HP.ToString();
-                winStateUI.SetActive(true);
+                scoreBoard.PlayerOneScore++;
+                scoreBoard.updateScoreboard(scoreBoard.PlayerOneScore + " - " + scoreBoard.PlayerTwoScore);
+                //endRoundMenu.GenerateListOfBuffs();
+
+                if (scoreBoard.PlayerOneScore == 3)
+                {
+                    winStateUI.SetActive(true);
+                }
+                else
+                {
+                    // set not over but next round
+                    entityTarget.resetGame();
+                }
+                
             }
         }
 
@@ -140,7 +160,7 @@ namespace ArenaGame
             int dmg = (Random.Range(0, 10) * Strength) / 3;
 
             // AI STUFFZ
-            if (energy >= 55 && HP < 30)
+            if (energy >= 55 && HP > 30)
             {
                 // high health and enough energy to use special attack
                 dmg = ((Random.Range(0, 10) * Strength) / 3) + 7 * 3;

@@ -8,6 +8,20 @@ namespace ArenaGame
     {
         public Dictionary<long, string> playerID = new Dictionary<long, string>();
         public List<Entity> entities = new List<Entity>();
+        public List<Buff> buffIndex = new List<Buff>();
+        public List<Buff> debuffIndex = new List<Buff>();
+
+        public void Awake()
+        {
+            GenerateListOfBuffs();
+        }
+
+        private void GenerateListOfBuffs()
+        {
+            TenPercentMoreDamage tenPercentMoreDamage = new TenPercentMoreDamage(1, "10% More Damage");
+            buffIndex.Add(tenPercentMoreDamage);
+            debuffIndex.Add(tenPercentMoreDamage);
+        }
 
         public long GeneratePlayerID(string name)
         {
@@ -45,5 +59,7 @@ namespace ArenaGame
             
             return newPlayer;
         }
+
+
     }
 }

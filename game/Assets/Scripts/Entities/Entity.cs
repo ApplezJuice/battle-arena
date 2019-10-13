@@ -60,9 +60,14 @@ namespace ArenaGame
         private bool vsAI = false;
         private bool godMode = false;
 
-
+        [SerializeField]
+        public Scoreboard scoreBoard;
+        public Transform nextRoundMenu;
 
         float attackTimer;
+        private bool betweenRounds = false;
+        private float betweenRoundsTimer = 30f;
+        private float betweenRoundsTimerTick = 0f;
 
         public void Awake()
         {
@@ -88,7 +93,6 @@ namespace ArenaGame
                 if (target.GetComponent<AI>())
                 {
                     // if there is an AI component
-                   // Debug.Log("Vs AI!");
                     vsAI = true;
                     aiEntity = GameObject.FindGameObjectWithTag("Enemy").GetComponent<AI>();
                     enemyHP.text = aiEntity.HP.ToString();
@@ -102,22 +106,6 @@ namespace ArenaGame
                 playerEnergy.text = energy.ToString();
                 //tarID = target.GetComponent<Entity>().ID;
 
-
-
-                //if (tarID == this.ID)
-                //{
-                //    isAI = true;
-                //    enemyHP = GameObject.Find("PlayerHPTMP").GetComponent<TextMeshProUGUI>();
-                //    playerHP = GameObject.Find("EnemyHPTMP").GetComponent<TextMeshProUGUI>();
-
-                //    //playerEnergy = GameObject.Find("EnemyEnergyTMP").GetComponent<TextMeshProUGUI>();
-
-                //    target = GameObject.FindGameObjectWithTag("Player2");
-                //    tarID = target.GetComponent<Entity>().ID;
-                //}
-
-
-
             }
         }
 
@@ -129,14 +117,15 @@ namespace ArenaGame
             if (Input.GetKeyDown(KeyCode.R))
             {
                 resetGame();
+                if (vsAI)
+                {
+                    aiEntity.ResetGame();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                if (!isAI)
-                {
-                    godMode = !godMode;
-                }
+                godMode = !godMode;
             }
 
             if (godMode)
@@ -159,41 +148,56 @@ namespace ArenaGame
 
 
             // Attack entity
-            if (!vsAI)
+            if (!betweenRounds)
             {
-                if (attackTimer >= 1.5f && entityTarget.HP > 0 && HP > 0)
+                if (!vsAI)
                 {
-                    entityAnimator.SetTrigger("attacking");
-                    damageTarget();
-                    attackTimer = 0f;
+                    if (attackTimer >= 1.5f && entityTarget.HP > 0 && HP > 0)
+                    {
+                        entityAnimator.SetTrigger("attacking");
+                        damageTarget();
+                        attackTimer = 0f;
 
+                    }
                 }
+                else
+                {
+                    // vs AI
+                    if (attackTimer >= 1.5f && aiEntity.HP > 0 && HP > 0)
+                    {
+                        entityAnimator.SetTrigger("attacking");
+                        damageTarget();
+                        attackTimer = 0f;
+
+                    }
+                }
+
+                // Recharge Energy
+                if (energy < 100)
+                {
+                    if (energyTimer >= energyTickRate)
+                    {
+                        regenEnergyTick();
+                        energyTimer = 0f;
+                    }
+                }
+
+                // timers
+                energyTimer += Time.deltaTime;
+                attackTimer += Time.deltaTime;
             }
             else
             {
-                // vs AI
-                if (attackTimer >= 1.5f && aiEntity.HP > 0 && HP > 0)
+                //between rounds
+                if (betweenRoundsTimer < betweenRoundsTimerTick)
                 {
-                    entityAnimator.SetTrigger("attacking");
-                    damageTarget();
-                    attackTimer = 0f;
-
+                    resetGame();
+                    betweenRounds = false;
+                    betweenRoundsTimerTick = 0f;
                 }
-            }
 
-            // Recharge Energy
-            if (energy < 100)
-            {
-                if (energyTimer >= energyTickRate)
-                {
-                    regenEnergyTick();
-                    energyTimer = 0f;
-                }
+                betweenRoundsTimerTick += Time.deltaTime;
             }
-
-            // timers
-            energyTimer += Time.deltaTime;
-            attackTimer += Time.deltaTime;
 
         }
 
@@ -207,7 +211,7 @@ namespace ArenaGame
             loseStateUI.SetActive(true);
         }
 
-        private void resetGame()
+        public void resetGame()
         {
             winStateUI.SetActive(false);
             loseStateUI.SetActive(false);
@@ -216,6 +220,7 @@ namespace ArenaGame
             //entityTarget.HP = 100;
             energy = 100;
             specialUsed = false;
+            HPPotionCount = 1;
 
             playerHP.text = HP.ToString();
             playerEnergy.text = energy.ToString();
@@ -252,27 +257,6 @@ namespace ArenaGame
         {
             // base dmg
             int dmg = (Random.Range(0, 10) * Strength) / 3;
-
-            // AI STUFFZ
-            //if (isAI)
-            //{
-            //    if (energy >= 55 && HP < 30)
-            //    {
-            //        // high health and enough energy to use special attack
-            //        dmg = ((Random.Range(0, 10) * Strength) / 3) + 7 * 3;
-            //        energy -= 45;
-            //        Debug.Log("Enemy Energy: " + energy);
-
-            //    }
-            //    else if (energy >= 35)
-            //    {
-            //        isBlocking = true;
-            //        specialUsed = true;
-            //        energy -= 35;
-            //        Debug.Log("Enemy Energy: " + energy);
-            //    }
-            //}
-            // END AI STUFFZ
             
             bool hasBlocked = false;
 
@@ -306,26 +290,6 @@ namespace ArenaGame
 
                 // Damage entity
                 entityTarget.AIDamagedYou(dmg);
-
-                //if (entityTarget.HP - dmg <= 0)
-                //{
-                //    entityTarget.HP -= entityTarget.HP;
-                //    if (target.name == "Enemy")
-                //    {
-                //        winStateUI.SetActive(true);
-                //    }
-                //    else
-                //    {
-                //        loseStateUI.SetActive(true);
-                //    }
-                //}
-                //else
-                //{
-                //    entityTarget.HP -= dmg;
-                //}
-
-                //enemyHP.text = entityTarget.HP.ToString();
-                //Debug.Log(Name + " HP: " + HP + " // " + entityTarget.Name + " HP: " + entityTarget.HP);
 
                 
             }
@@ -364,6 +328,7 @@ namespace ArenaGame
             // happens vs both AI and player
 
             float posY = aiEntity.transform.position.y;
+            // will break once player gets involved pvp
             Transform damagePopupTransform = Instantiate(DamagePopupPrefab, new Vector3(aiEntity.transform.position.x, posY += 1.5f, 0), Quaternion.identity);
             DamagePopup damagePopup = damagePopupTransform.GetComponent<DamagePopup>();
 
@@ -480,7 +445,26 @@ namespace ArenaGame
                 // you lose
                 HP = 0;
                 playerHP.text = HP.ToString();
-                loseStateUI.SetActive(true);
+
+                // increase win count
+                scoreBoard.PlayerTwoScore++;
+                scoreBoard.updateScoreboard(scoreBoard.PlayerOneScore + " - " + scoreBoard.PlayerTwoScore);
+                Transform nextRoundMenuTransform = Instantiate(nextRoundMenu, nextRoundMenu.transform.position, Quaternion.identity);
+                nextRoundMenuTransform.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform,false);
+
+
+                // check if 2nd player is at 3
+                if (scoreBoard.PlayerTwoScore == 3)
+                {
+                    loseStateUI.SetActive(true);
+                }
+                else
+                {
+                    // set not over but next round
+                    //resetGame();
+                    betweenRounds = true;
+                    Debug.Log(betweenRounds);
+                }
             }
 
         }
