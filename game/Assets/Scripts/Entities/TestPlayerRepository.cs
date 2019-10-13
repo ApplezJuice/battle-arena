@@ -34,13 +34,6 @@ namespace ArenaGame
         {
             Entity newPlayer = GenerateStats(player);
             entities.Add(newPlayer);
-
-            for (int i = 0; i < entities.Count; i++)
-            {
-                //Debug.Log(entities[i].HP);
-                //Debug.Log(entities[i].Strength);
-            }
-
         }
 
         public Entity GenerateStats(Entity player)
