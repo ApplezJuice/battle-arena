@@ -16,7 +16,7 @@ namespace ArenaGame
         [SerializeField]
         public TextMeshProUGUI timerText;
 
-        private const float NEXT_ROUND_TIMER = 30f;
+        private const float NEXT_ROUND_TIMER = 15f;
         private float timerTick;
 
         private float oneSecondTimer;

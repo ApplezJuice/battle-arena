@@ -69,7 +69,7 @@ namespace ArenaGame
 
         float attackTimer;
         public bool betweenRounds = false;
-        public float betweenRoundsTimer = 30f;
+        public float betweenRoundsTimer = 15f;
         public float betweenRoundsTimerTick = 0f;
 
         // Buffs and Debuffs

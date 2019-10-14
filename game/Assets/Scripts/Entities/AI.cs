@@ -171,7 +171,7 @@ namespace ArenaGame
                     // set not over but next round
                     Transform nextRoundMenuTransform = Instantiate(nextRoundMenu, nextRoundMenu.transform.position, Quaternion.identity);
                     nextRoundMenuTransform.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-                    entityTarget.betweenRoundsTimer = 30f;
+                    entityTarget.betweenRoundsTimer = 15f;
                     entityTarget.betweenRoundsTimerTick = 0f;
                     entityTarget.betweenRounds = true;
                     //entityTarget.resetGame();
@@ -291,15 +291,12 @@ namespace ArenaGame
                 case 1:
                     int tempStr = Strength + (int)(Strength * .10f);
                     Strength = tempStr;
-                    Debug.Log("New Enemy STR - " + Strength);
                     break;
                 case 2:
                     energyStartAmount += 10;
-                    Debug.Log("New Enemy Energy - " + energy);
                     break;
                 case 3:
                     HPPotionStartCount++;
-                    Debug.Log("New Enemy Potion Start - " + HPPotionStartCount);
                     break;
             }
 
