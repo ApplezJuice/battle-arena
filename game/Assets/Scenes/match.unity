@@ -8723,46 +8723,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &811341540 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1000013301305156, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f,
+--- !u!114 &811341541 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f,
     type: 3}
   m_PrefabInstance: {fileID: 1129346743}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &811341541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811341540}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc50b85a0ce789745972f71377e56144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: MikeH
-  ID: 0
-  HP: 0
-  Strength: 0
-  Defence: 0
-  specialUsed: 0
-  playerDatabase: {fileID: 1330407340}
-  isBlocking: 0
-  isSpecialAttack: 0
-  DamagePopupPrefab: {fileID: 3714382934599257961, guid: deab4f6017325e84abc7cebc5025d380,
-    type: 3}
-  SkillStatusPopupPrefab: {fileID: 2467388734391890312, guid: d197edc0a905b884f83f5a0fc66372e3,
-    type: 3}
-  winStateUI: {fileID: 1320034379}
-  loseStateUI: {fileID: 1116762189}
-  mainCam: {fileID: 519420031}
-  scoreBoard: {fileID: 1659879043}
-  nextRoundMenu: {fileID: 4217680954666573621, guid: b00ee9de8b7fabb44920427e76a0c01f,
-    type: 3}
-  betweenRounds: 0
-  betweenRoundsTimer: 30
-  betweenRoundsTimerTick: 0
 --- !u!4 &811341543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010470550876, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f,
@@ -12762,10 +12734,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1000013301305156, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: m_TagString
-      value: Player2
-      objectReference: {fileID: 0}
     - target: {fileID: 4000010470550876, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.3999999
@@ -12810,18 +12778,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4000010470550876, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010470550876, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010470550876, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: playerDatabase
+      value: 
+      objectReference: {fileID: 1330407340}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: winStateUI
+      value: 
+      objectReference: {fileID: 1320034379}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: loseStateUI
+      value: 
+      objectReference: {fileID: 1116762189}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: scoreBoard
+      value: 
+      objectReference: {fileID: 1659879043}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
 --- !u!1 &1133014351
