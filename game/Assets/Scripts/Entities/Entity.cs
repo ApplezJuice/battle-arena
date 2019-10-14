@@ -14,6 +14,7 @@ namespace ArenaGame
         public int HP;
         public int Strength;
         public int Defence;
+        private int HPPotionStartCount = 1;
         private int HPPotionCount = 1;
 
         private int energy = 100;
@@ -68,6 +69,10 @@ namespace ArenaGame
         public bool betweenRounds = false;
         public float betweenRoundsTimer = 30f;
         public float betweenRoundsTimerTick = 0f;
+
+        // Buffs and Debuffs
+        public List<Buff> activeBuffs = new List<Buff>();
+        public List<Buff> activeDebuffs = new List<Buff>();
 
         public void Awake()
         {
@@ -220,7 +225,7 @@ namespace ArenaGame
             //entityTarget.HP = 100;
             energy = 100;
             specialUsed = false;
-            HPPotionCount = 1;
+            HPPotionCount = HPPotionStartCount;
             TextMeshProUGUI potionCountText = GameObject.Find("PotionCount").GetComponent<TextMeshProUGUI>();
             potionCountText.text = HPPotionCount.ToString();
 
@@ -432,6 +437,33 @@ namespace ArenaGame
                 // no more potions
                 InstantiateSkillPopup("Not enough potions!");
             }
+        }
+
+        public void BuffApplied(Buff appliedBuff)
+        {
+            activeBuffs.Add(appliedBuff);
+
+            switch (appliedBuff.spellID)
+            {
+                case 1:
+                    int tempStr = Strength + (int)(Strength * .10f);
+                    Strength = tempStr;
+                    Debug.Log("New STR - " + Strength);
+                    break;
+                case 2:
+                    energy += 10;
+                    Debug.Log("New Energy - " + energy);
+                    break;
+                case 3:
+                    HPPotionStartCount++;
+                    Debug.Log("New Potion Start - " + HPPotionStartCount);
+                    break;
+            }
+        }
+
+        public void DebuffApplied(Buff appliedDeBuff)
+        {
+            activeDebuffs.Add(appliedDeBuff);
         }
 
         public void AIDamagedYou(int dmg)

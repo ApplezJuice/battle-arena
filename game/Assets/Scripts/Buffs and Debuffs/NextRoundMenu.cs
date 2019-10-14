@@ -29,6 +29,12 @@ namespace ArenaGame
         [SerializeField]
         public Transform buffButtonPrefab;
 
+        private bool buffApplied = false;
+        private bool debuffApplied = false;
+
+        [SerializeField]
+        public Entity playerEntity;
+
         public void GenerateListOfBuffs()
         {
             for (int i = 0; i < 3; i++)
@@ -61,6 +67,8 @@ namespace ArenaGame
             repo = GameObject.Find("RepoTest").GetComponent<TestPlayerRepository>();
             GenerateListOfBuffs();
             timerText.text = timerStart.ToString();
+
+            playerEntity = GameObject.FindGameObjectWithTag("Player2").GetComponent<Entity>();
         }
 
         // Update is called once per frame
@@ -84,15 +92,28 @@ namespace ArenaGame
 
         public void ApplySelection(int buffNumber, bool isDebuff)
         {
-            if (isDebuff)
+            if (isDebuff && !debuffApplied)
             {
                 Debug.Log("Debuff added: " + debuffsToChoose[buffNumber]);
+
+                // will have to redo when multiplayer happens
+                // setting active buffs and debuffs
+                playerEntity.DebuffApplied(debuffsToChoose[buffNumber]);
+
+                debuffApplied = true;
+                Destroy(GameObject.FindGameObjectWithTag("DebuffSelection"));
             }
-            else
+            else if (!isDebuff && !buffApplied)
             {
                 // buff
                 Debug.Log("Buff added: " + buffsToChoose[buffNumber]);
 
+                // will have to redo when multiplayer happens
+                // setting active buffs and debuffs
+                playerEntity.BuffApplied(buffsToChoose[buffNumber]);
+
+                buffApplied = true;
+                Destroy(GameObject.FindGameObjectWithTag("BuffSelection"));
             }
         }
     }

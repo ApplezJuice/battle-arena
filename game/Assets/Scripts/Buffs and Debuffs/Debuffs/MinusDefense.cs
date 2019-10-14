@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace ArenaGame
 {
-    public class TenDefense : Buff
+    public class MinusDefense : Buff
     {
-        public TenDefense(int spellID, string spellName) : base(spellID, spellName)
+        public MinusDefense(int spellID, string spellName) : base(spellID, spellName)
         {
             
         }

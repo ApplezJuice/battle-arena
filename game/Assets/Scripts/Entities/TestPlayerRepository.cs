@@ -19,7 +19,7 @@ namespace ArenaGame
         private void GenerateListOfBuffs()
         {
             TenPercentMoreDamage tenPercentMoreDamage = new TenPercentMoreDamage(1, "10% More Damage");
-            TenPercentMoreEnergy tenPercentMoreEnergy = new TenPercentMoreEnergy(2, "10% More Energy");
+            TenPercentMoreEnergy tenPercentMoreEnergy = new TenPercentMoreEnergy(2, "10 More Energy");
             ExtraPotion extraHealthPotion = new ExtraPotion(3, "Extra Health Potion");
 
             buffIndex.Add(tenPercentMoreDamage);
@@ -28,7 +28,7 @@ namespace ArenaGame
 
 
             OnePointFiveSlowerAttack onePointFiveSlowerAttack = new OnePointFiveSlowerAttack(4, "1.5% Slower Attack Speed");
-            TenDefense tenLessDefense = new TenDefense(5, "-10 Defense");
+            MinusDefense tenLessDefense = new MinusDefense(5, "-10 Defense");
             TenLessEnergy tenLessEnergy = new TenLessEnergy(6, "-10% Energy");
 
             debuffIndex.Add(onePointFiveSlowerAttack);
