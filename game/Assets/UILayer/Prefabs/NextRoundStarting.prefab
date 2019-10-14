@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 4217680954666573620}
   m_Layer: 5
   m_Name: NextRoundStarting
-  m_TagString: Untagged
+  m_TagString: NextRoundMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

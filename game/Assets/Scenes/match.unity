@@ -8760,6 +8760,9 @@ MonoBehaviour:
   scoreBoard: {fileID: 1659879043}
   nextRoundMenu: {fileID: 4217680954666573621, guid: b00ee9de8b7fabb44920427e76a0c01f,
     type: 3}
+  betweenRounds: 0
+  betweenRoundsTimer: 30
+  betweenRoundsTimerTick: 0
 --- !u!4 &811341543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010470550876, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f,
@@ -19014,6 +19017,8 @@ MonoBehaviour:
   loseStateUI: {fileID: 1116762189}
   scoreBoard: {fileID: 1659879043}
   endRoundMenu: {fileID: 4217680954666573620, guid: b00ee9de8b7fabb44920427e76a0c01f,
+    type: 3}
+  nextRoundMenu: {fileID: 4217680954666573621, guid: b00ee9de8b7fabb44920427e76a0c01f,
     type: 3}
 --- !u!4 &1649072180 stripped
 Transform:
