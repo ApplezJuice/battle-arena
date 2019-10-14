@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 namespace ArenaGame
 {
@@ -14,9 +15,12 @@ namespace ArenaGame
         public int HP;
         public int Strength;
         public int Defence;
+        private int HPPotionStartCount = 1;
         private int HPPotionCount = 1;
+        private float attackSpeed = 1.5f;
 
         private int energy = 100;
+        private int energyStartAmount = 100;
         public bool specialUsed = false;
         private int energyRechargePerTick = 5;
         private float energyTimer;
@@ -57,6 +61,8 @@ namespace ArenaGame
 
         public Transform nextRoundMenu;
 
+        private bool choseBuffs = false;
+
         private void Awake()
         {
             Strength = Random.Range(8, 12);
@@ -82,13 +88,19 @@ namespace ArenaGame
         {
             if (!entityTarget.betweenRounds)
             {
+                // reset chosen buffs so it will choose again
+                if (choseBuffs)
+                {
+                    choseBuffs = false;
+                }
+
                 if (HP < 40 && HPPotionCount > 0)
                 {
                     UsePotion();
                 }
 
                 // Attack entity
-                if (attackTimer >= 1.5f && entityTarget.HP > 0 && HP > 0)
+                if (attackTimer >= attackSpeed && entityTarget.HP > 0 && HP > 0)
                 {
                     entityAnimator.SetTrigger("attacking");
                     DamageTarget();
@@ -97,7 +109,7 @@ namespace ArenaGame
                 }
 
                 // Recharge Energy
-                if (energy < 100)
+                if (energy < energyStartAmount)
                 {
                     if (energyTimer >= energyTickRate)
                     {
@@ -111,6 +123,11 @@ namespace ArenaGame
                 energyTimer += Time.deltaTime;
                 attackTimer += Time.deltaTime;
             }
+            else if (entityTarget.betweenRounds && !choseBuffs)
+            {
+                ChooseBuffAndDebuff();
+                choseBuffs = true;
+            }
         }
 
         public void ResetGame()
@@ -118,7 +135,7 @@ namespace ArenaGame
             HP = 100;
             energy = 100;
             specialUsed = false;
-            HPPotionCount = 1;
+            HPPotionCount = HPPotionStartCount;
 
             playerHP.text = HP.ToString();
             //playerEnergy.text = energy.ToString();
@@ -252,15 +269,61 @@ namespace ArenaGame
         {
             // Tick
             int regen = energy + energyRechargePerTick;
-            if (regen >= 100)
+            if (regen >= energyStartAmount)
             {
-                energy = 100;
+                energy = energyStartAmount;
             }
             else
             {
                 energy += energyRechargePerTick;
             }
 
+        }
+
+        private void ChooseBuffAndDebuff()
+        {
+            // Auto choose something
+            int randomBuff = Random.Range(0, playerDatabase.buffIndex.Count);
+            int randomDebuff = Random.Range(0, playerDatabase.debuffIndex.Count);
+
+            switch (playerDatabase.buffIndex.ElementAt(randomBuff).spellID)
+            {
+                case 1:
+                    int tempStr = Strength + (int)(Strength * .10f);
+                    Strength = tempStr;
+                    Debug.Log("New Enemy STR - " + Strength);
+                    break;
+                case 2:
+                    energyStartAmount += 10;
+                    Debug.Log("New Enemy Energy - " + energy);
+                    break;
+                case 3:
+                    HPPotionStartCount++;
+                    Debug.Log("New Enemy Potion Start - " + HPPotionStartCount);
+                    break;
+            }
+
+            entityTarget.DebuffApplied(playerDatabase.debuffIndex.ElementAt(randomDebuff));
+            
+        }
+
+        public void DebuffApplied(Buff appliedDeBuff)
+        {
+            switch (appliedDeBuff.spellID)
+            {
+                case 4:
+                    float attackSpeedTemp = attackSpeed + (attackSpeed * .10f);
+                    attackSpeed = attackSpeedTemp;
+                    break;
+                case 5:
+                    Defence -= 2;
+                    break;
+                case 6:
+                    energyStartAmount -= 10;
+                    break;
+            }
+
+            Debug.Log("Debuff applied to enemy: " + appliedDeBuff.spellName);
         }
     }
 }

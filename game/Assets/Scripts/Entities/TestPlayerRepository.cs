@@ -27,9 +27,9 @@ namespace ArenaGame
             buffIndex.Add(extraHealthPotion);
 
 
-            OnePointFiveSlowerAttack onePointFiveSlowerAttack = new OnePointFiveSlowerAttack(4, "1.5% Slower Attack Speed");
-            MinusDefense tenLessDefense = new MinusDefense(5, "-10 Defense");
-            TenLessEnergy tenLessEnergy = new TenLessEnergy(6, "-10% Energy");
+            OnePointFiveSlowerAttack onePointFiveSlowerAttack = new OnePointFiveSlowerAttack(4, "10% Slower Attack Speed");
+            MinusDefense tenLessDefense = new MinusDefense(5, "-2 Defense");
+            TenLessEnergy tenLessEnergy = new TenLessEnergy(6, "-10 Energy");
 
             debuffIndex.Add(onePointFiveSlowerAttack);
             debuffIndex.Add(tenLessDefense);

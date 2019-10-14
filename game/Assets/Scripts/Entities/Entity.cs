@@ -16,8 +16,10 @@ namespace ArenaGame
         public int Defence;
         private int HPPotionStartCount = 1;
         private int HPPotionCount = 1;
+        private float attackSpeed = 1.5f;
 
         private int energy = 100;
+        private int energyStartAmount = 100;
         public bool specialUsed = false;
         private int energyRechargePerTick = 5;
         private float energyTimer;
@@ -138,6 +140,7 @@ namespace ArenaGame
                 if (HP < 100)
                 {
                     HP = 100;
+                    energy = energyStartAmount;
                     playerHP.text = HP.ToString();
                 }
             }
@@ -157,7 +160,7 @@ namespace ArenaGame
             {
                 if (!vsAI)
                 {
-                    if (attackTimer >= 1.5f && entityTarget.HP > 0 && HP > 0)
+                    if (attackTimer >= attackSpeed && entityTarget.HP > 0 && HP > 0)
                     {
                         entityAnimator.SetTrigger("attacking");
                         damageTarget();
@@ -168,7 +171,7 @@ namespace ArenaGame
                 else
                 {
                     // vs AI
-                    if (attackTimer >= 1.5f && aiEntity.HP > 0 && HP > 0)
+                    if (attackTimer >= attackSpeed && aiEntity.HP > 0 && HP > 0)
                     {
                         entityAnimator.SetTrigger("attacking");
                         damageTarget();
@@ -178,7 +181,7 @@ namespace ArenaGame
                 }
 
                 // Recharge Energy
-                if (energy < 100)
+                if (energy < energyStartAmount)
                 {
                     if (energyTimer >= energyTickRate)
                     {
@@ -223,7 +226,7 @@ namespace ArenaGame
 
             HP = 100;
             //entityTarget.HP = 100;
-            energy = 100;
+            energy = energyStartAmount;
             specialUsed = false;
             HPPotionCount = HPPotionStartCount;
             TextMeshProUGUI potionCountText = GameObject.Find("PotionCount").GetComponent<TextMeshProUGUI>();
@@ -246,9 +249,9 @@ namespace ArenaGame
         {
             // Tick
             int regen = energy + energyRechargePerTick;
-            if (regen >= 100)
+            if (regen >= energyStartAmount)
             {
-                energy = 100;
+                energy = energyStartAmount;
             }
             else
             {
@@ -451,12 +454,11 @@ namespace ArenaGame
                     Debug.Log("New STR - " + Strength);
                     break;
                 case 2:
-                    energy += 10;
-                    Debug.Log("New Energy - " + energy);
+                    energyStartAmount += 10;
+                    Debug.Log("New Energy - " + energyStartAmount);
                     break;
                 case 3:
                     HPPotionStartCount++;
-                    Debug.Log("New Potion Start - " + HPPotionStartCount);
                     break;
             }
         }
@@ -464,6 +466,22 @@ namespace ArenaGame
         public void DebuffApplied(Buff appliedDeBuff)
         {
             activeDebuffs.Add(appliedDeBuff);
+
+            switch (appliedDeBuff.spellID)
+            {
+                case 4:
+                    float attackSpeedTemp = attackSpeed + (attackSpeed * .10f);
+                    attackSpeed = attackSpeedTemp;
+                    break;
+                case 5:
+                    Defence -= 2;
+                    break;
+                case 6:
+                    energyStartAmount -= 10;
+                    break;
+            }
+
+            Debug.Log("Debuff applied: " + appliedDeBuff.spellName);
         }
 
         public void AIDamagedYou(int dmg)

@@ -35,6 +35,8 @@ namespace ArenaGame
         [SerializeField]
         public Entity playerEntity;
 
+        private AI aiEntity;
+
         public void GenerateListOfBuffs()
         {
             for (int i = 0; i < 3; i++)
@@ -64,6 +66,7 @@ namespace ArenaGame
         // Start is called before the first frame update
         void Awake()
         {
+            aiEntity = GameObject.FindGameObjectWithTag("Enemy").GetComponent<AI>();
             repo = GameObject.Find("RepoTest").GetComponent<TestPlayerRepository>();
             GenerateListOfBuffs();
             timerText.text = timerStart.ToString();
@@ -94,11 +97,11 @@ namespace ArenaGame
         {
             if (isDebuff && !debuffApplied)
             {
-                Debug.Log("Debuff added: " + debuffsToChoose[buffNumber]);
+                //Debug.Log("Debuff added: " + debuffsToChoose[buffNumber]);
 
                 // will have to redo when multiplayer happens
                 // setting active buffs and debuffs
-                playerEntity.DebuffApplied(debuffsToChoose[buffNumber]);
+                aiEntity.DebuffApplied(debuffsToChoose[buffNumber]);
 
                 debuffApplied = true;
                 Destroy(GameObject.FindGameObjectWithTag("DebuffSelection"));
