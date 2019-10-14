@@ -55,6 +55,8 @@ namespace ArenaGame
         [SerializeField]
         public NextRoundMenu endRoundMenu;
 
+        public Transform nextRoundMenu;
+
         private void Awake()
         {
             Strength = Random.Range(8, 12);
@@ -78,35 +80,37 @@ namespace ArenaGame
         // Update is called once per frame
         void Update()
         {
-            if (HP < 40 && HPPotionCount > 0)
+            if (!entityTarget.betweenRounds)
             {
-                UsePotion();
-            }
-
-            // Attack entity
-            if (attackTimer >= 1.5f && entityTarget.HP > 0 && HP > 0)
-            {
-                entityAnimator.SetTrigger("attacking");
-                DamageTarget();
-                attackTimer = 0f;
-
-            }
-
-            // Recharge Energy
-            if (energy < 100)
-            {
-                if (energyTimer >= energyTickRate)
+                if (HP < 40 && HPPotionCount > 0)
                 {
-                    regenEnergyTick();
-                    energyTimer = 0f;
-                    //Debug.Log(energy);
+                    UsePotion();
                 }
+
+                // Attack entity
+                if (attackTimer >= 1.5f && entityTarget.HP > 0 && HP > 0)
+                {
+                    entityAnimator.SetTrigger("attacking");
+                    DamageTarget();
+                    attackTimer = 0f;
+
+                }
+
+                // Recharge Energy
+                if (energy < 100)
+                {
+                    if (energyTimer >= energyTickRate)
+                    {
+                        regenEnergyTick();
+                        energyTimer = 0f;
+                        //Debug.Log(energy);
+                    }
+                }
+
+                // timers
+                energyTimer += Time.deltaTime;
+                attackTimer += Time.deltaTime;
             }
-
-            // timers
-            energyTimer += Time.deltaTime;
-            attackTimer += Time.deltaTime;
-
         }
 
         public void ResetGame()
@@ -148,7 +152,12 @@ namespace ArenaGame
                 else
                 {
                     // set not over but next round
-                    entityTarget.resetGame();
+                    Transform nextRoundMenuTransform = Instantiate(nextRoundMenu, nextRoundMenu.transform.position, Quaternion.identity);
+                    nextRoundMenuTransform.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+                    entityTarget.betweenRoundsTimer = 30f;
+                    entityTarget.betweenRoundsTimerTick = 0f;
+                    entityTarget.betweenRounds = true;
+                    //entityTarget.resetGame();
                 }
                 
             }

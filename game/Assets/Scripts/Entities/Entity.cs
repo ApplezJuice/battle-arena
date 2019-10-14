@@ -65,9 +65,9 @@ namespace ArenaGame
         public Transform nextRoundMenu;
 
         float attackTimer;
-        private bool betweenRounds = false;
-        private float betweenRoundsTimer = 30f;
-        private float betweenRoundsTimerTick = 0f;
+        public bool betweenRounds = false;
+        public float betweenRoundsTimer = 30f;
+        public float betweenRoundsTimerTick = 0f;
 
         public void Awake()
         {
@@ -221,6 +221,8 @@ namespace ArenaGame
             energy = 100;
             specialUsed = false;
             HPPotionCount = 1;
+            TextMeshProUGUI potionCountText = GameObject.Find("PotionCount").GetComponent<TextMeshProUGUI>();
+            potionCountText.text = HPPotionCount.ToString();
 
             playerHP.text = HP.ToString();
             playerEnergy.text = energy.ToString();
@@ -449,9 +451,6 @@ namespace ArenaGame
                 // increase win count
                 scoreBoard.PlayerTwoScore++;
                 scoreBoard.updateScoreboard(scoreBoard.PlayerOneScore + " - " + scoreBoard.PlayerTwoScore);
-                Transform nextRoundMenuTransform = Instantiate(nextRoundMenu, nextRoundMenu.transform.position, Quaternion.identity);
-                nextRoundMenuTransform.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform,false);
-
 
                 // check if 2nd player is at 3
                 if (scoreBoard.PlayerTwoScore == 3)
@@ -462,8 +461,10 @@ namespace ArenaGame
                 {
                     // set not over but next round
                     //resetGame();
+                    Transform nextRoundMenuTransform = Instantiate(nextRoundMenu, nextRoundMenu.transform.position, Quaternion.identity);
+                    nextRoundMenuTransform.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
                     betweenRounds = true;
-                    Debug.Log(betweenRounds);
+                    //Debug.Log(betweenRounds);
                 }
             }
 
