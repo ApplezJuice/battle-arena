@@ -11,7 +11,10 @@ public static class SceneLoader
     {
         match,
         Loading,
-        Menu
+        Menu,
+        LoginScreen,
+        RegisterMenu,
+        MainLoginMenu
 
     }
 

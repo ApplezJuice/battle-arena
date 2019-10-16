@@ -12734,6 +12734,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: playerDatabase
+      value: 
+      objectReference: {fileID: 1330407340}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: winStateUI
+      value: 
+      objectReference: {fileID: 1320034379}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: loseStateUI
+      value: 
+      objectReference: {fileID: 1116762189}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
+      propertyPath: scoreBoard
+      value: 
+      objectReference: {fileID: 1659879043}
     - target: {fileID: 4000010470550876, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.3999999
@@ -12778,26 +12798,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: playerDatabase
-      value: 
-      objectReference: {fileID: 1330407340}
-    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: winStateUI
-      value: 
-      objectReference: {fileID: 1320034379}
-    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: loseStateUI
-      value: 
-      objectReference: {fileID: 1116762189}
-    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: mainCam
-      value: 
-      objectReference: {fileID: 519420031}
-    - target: {fileID: 811341541, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
-      propertyPath: scoreBoard
-      value: 
-      objectReference: {fileID: 1659879043}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ac6bdc2e4b5e47468b8b460ca863a5f, type: 3}
 --- !u!1 &1133014351
