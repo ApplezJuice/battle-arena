@@ -7,6 +7,11 @@ using PlayFab;
 using PlayFab.ClientModels;
 using System;
 
+#if GOOGLEGAMES
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+#endif
+
 public class LoginWindowView : MonoBehaviour
 {
     public bool ClearPlayerPrefs;
@@ -32,6 +37,20 @@ public class LoginWindowView : MonoBehaviour
 
     public void Awake()
     {
+
+#if GOOGLEGAMES
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            .AddOauthScope("profile")
+            .RequestServerAuthCode(false)
+            .Build();
+        PlayGamesPlatform.InitializeInstance(config);
+
+        PlayGamesPlatform.DebugLogEnabled = true;
+
+        PlayGamesPlatform.Activate();
+#endif
+
+
         if (ClearPlayerPrefs)
         {
             _AuthService.UnlinkSilentAuth();
@@ -122,7 +141,18 @@ public class LoginWindowView : MonoBehaviour
 
     private void OnLoginWithGoogleClicked()
     {
-        throw new NotImplementedException();
+        // using unity social platform
+        Social.localUser.Authenticate((success) =>
+        {
+            if (success)
+            {
+                // will get the sever auth code
+                // need to take it and send it to playfab to auth
+                var serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
+                _AuthService.AuthTicket = serverAuthCode;
+                _AuthService.Authenticate(Authtypes.Google);
+            }
+        });
     }
 
     private void OnLoginClicked()
