@@ -9,6 +9,7 @@ using System;
 
 public class LoginWindowView : MonoBehaviour
 {
+    public bool ClearPlayerPrefs;
 
     public TextMeshProUGUI usernameField;
     public TextMeshProUGUI passwordField;
@@ -19,6 +20,7 @@ public class LoginWindowView : MonoBehaviour
     public Button loginWithGoogle;
     public Button registerButton;
     public Button cancelRegisterButton;
+    public Toggle rememberMe;
 
     public GameObject registerPanel;
     public GameObject mainPanel;
@@ -27,6 +29,25 @@ public class LoginWindowView : MonoBehaviour
 
     // Reference to our Authentication service
     private PlayFabAuthService _AuthService = PlayFabAuthService.Instance;
+
+    public void Awake()
+    {
+        if (ClearPlayerPrefs)
+        {
+            _AuthService.UnlinkSilentAuth();
+            _AuthService.ClearRememberMe();
+            _AuthService.AuthType = Authtypes.None;
+        }
+
+        //Set our remember me button to our remembered state.
+        rememberMe.isOn = _AuthService.RememberMe;
+
+        //Subscribe to our Remember Me toggle
+        rememberMe.onValueChanged.AddListener((toggle) =>
+        {
+            _AuthService.RememberMe = toggle;
+        });
+    }
 
     void Start()
     {
@@ -75,6 +96,7 @@ public class LoginWindowView : MonoBehaviour
     private void OnLoginSuccess(LoginResult result)
     {
         Debug.LogFormat("Logged In as: {0}", result.PlayFabId);
+        SceneLoader.Load(SceneLoader.Scene.Menu);
     }
 
     private void OnPlayFaberror(PlayFabError error)
