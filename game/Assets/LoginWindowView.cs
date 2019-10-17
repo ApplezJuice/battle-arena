@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
 using System;
+using Mirror;
 
 #if GOOGLEGAMES
 using GooglePlayGames;
@@ -20,6 +21,8 @@ public class LoginWindowView : MonoBehaviour
     public TextMeshProUGUI passwordField;
     public TextMeshProUGUI confirmPasswordField;
     public TextMeshProUGUI infoText;
+
+    public BasicAuth basicAuth;
 
     public Button loginButton;
     public Button loginWithGoogle;
@@ -115,7 +118,12 @@ public class LoginWindowView : MonoBehaviour
     private void OnLoginSuccess(LoginResult result)
     {
         Debug.LogFormat("Logged In as: {0}", result.PlayFabId);
-        SceneLoader.Load(SceneLoader.Scene.Menu);
+
+        //SceneLoader.Load(SceneLoader.Scene.Menu);
+
+        basicAuth.username = result.PlayFabId;
+        basicAuth.password = result.SessionTicket;
+        NetworkManager.singleton.StartClient();
     }
 
     private void OnPlayFaberror(PlayFabError error)
@@ -148,9 +156,11 @@ public class LoginWindowView : MonoBehaviour
             {
                 // will get the sever auth code
                 // need to take it and send it to playfab to auth
+#if GOOGLEGAMES
                 var serverAuthCode = PlayGamesPlatform.Instance.GetServerAuthCode();
                 _AuthService.AuthTicket = serverAuthCode;
                 _AuthService.Authenticate(Authtypes.Google);
+#endif
             }
         });
     }

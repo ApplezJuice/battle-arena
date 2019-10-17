@@ -244,6 +244,22 @@ namespace Mirror
             {
                 StartServer();
             }
+
+
+            // remove on client build
+            // remove on client build
+            // remove on client build
+            // remove on client build
+            // remove on client build
+
+            // remove on client build
+            StartServer();
+            // remove on client build
+            // remove on client build
+            // remove on client build
+            // remove on client build
+            // remove on client build
+            // remove on client build
         }
 
         // NetworkIdentity.UNetStaticUpdate is called from UnityEngine while LLAPI network is active.
