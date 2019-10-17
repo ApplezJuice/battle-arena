@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Mirror;
+using PlayFab;
 
-    [AddComponentMenu("Network/Authenticators/BasicAuthenticator")]
+[AddComponentMenu("Network/Authenticators/BasicAuthenticator")]
     public class BasicAuth : NetworkAuthenticator
     {
         [Header("Custom Properties")]
@@ -62,7 +63,77 @@ using Mirror;
         // TESTING REMOVE
         msg.playFabID = username;
         msg.sessionTicket = password;
-        // TESTING REMOVE
+        // TESTING REMOVE\
+
+        //NetworkManager.userAuthDetails.Add(msg.playFabID, conn);
+        /*
+         * 
+         if (NetworkManager.singleton.PlayFabIDs.Contains(result.UserInfo.PlayFabID))
+        {
+            NetworkConnection conn = NetworkManager.singleton.PlayFabIDs(result.UserInfo.PlayFabID);
+            NetworkManager.singleton.PlayFabIDs.Remove(result.UserInfo.PlayFabID);
+        }
+
+         */
+
+        PlayFabServerAPI.AuthenticateSessionTicket(new PlayFab.ServerModels.AuthenticateSessionTicketRequest()
+        {
+            SessionTicket = msg.sessionTicket
+        }, (result) =>
+        {
+            
+            Debug.Log("The result of the result of the playfabID: " + result.UserInfo.PlayFabId);
+            if (msg.playFabID == result.UserInfo.PlayFabId)
+            {
+                // this is a good request
+                AuthResponseMessage authResponseMessage = new AuthResponseMessage
+                {
+                    code = 100,
+                    message = "Success"
+                };
+
+                NetworkServer.SendToClient(conn.connectionId, authResponseMessage);
+
+                // Invoke the event to complete a successful authentication
+                base.OnServerAuthenticated.Invoke(conn);
+            }
+            else
+            {
+                Debug.Log(result.UserInfo.PlayFabId);
+                // invalid token for playfabID
+                AuthResponseMessage authResponseMessage = new AuthResponseMessage
+                {
+                    code = 200,
+                    message = "Invalid Credentials"
+                };
+
+                NetworkServer.SendToClient(conn.connectionId, authResponseMessage);
+
+                // must set NetworkConnection isAuthenticated = false
+                conn.isAuthenticated = false;
+
+                // disconnect the client after 1 second so that response message gets delivered
+                Invoke(nameof(conn.Disconnect), 1);
+            }
+
+        }, (error) =>
+        {
+            // some error
+            Debug.Log(error);
+            AuthResponseMessage authResponseMessage = new AuthResponseMessage
+            {
+                code = 200,
+                message = "Invalid Credentials"
+            };
+
+            NetworkServer.SendToClient(conn.connectionId, authResponseMessage);
+
+            // must set NetworkConnection isAuthenticated = false
+            conn.isAuthenticated = false;
+
+            // disconnect the client after 1 second so that response message gets delivered
+            Invoke(nameof(conn.Disconnect), 1);
+        });
 
         // check the credentials by calling your web server, database table, playfab api, or any method appropriate.
         if (msg.playFabID == username && msg.sessionTicket == password)

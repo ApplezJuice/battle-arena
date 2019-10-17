@@ -17,10 +17,11 @@ public class LoginWindowView : MonoBehaviour
 {
     public bool ClearPlayerPrefs;
 
-    public TextMeshProUGUI usernameField;
+    public TextMeshProUGUI emailField;
     public TextMeshProUGUI passwordField;
     public TextMeshProUGUI confirmPasswordField;
     public TextMeshProUGUI infoText;
+    public TextMeshProUGUI registerInfoText;
 
     public BasicAuth basicAuth;
 
@@ -73,7 +74,7 @@ public class LoginWindowView : MonoBehaviour
 
     void Start()
     {
-        mainPanel.SetActive(false);
+        mainPanel.SetActive(true);
         registerPanel.SetActive(false);
 
         // subscribe to events that happen after we authenticate
@@ -95,7 +96,7 @@ public class LoginWindowView : MonoBehaviour
     private void OnCancelRegisterButtonClicked()
     {
         //Reset all forms
-        usernameField.text = string.Empty;
+        emailField.text = string.Empty;
         passwordField.text = string.Empty;
         confirmPasswordField.text = string.Empty;
         //Show panels
@@ -110,7 +111,8 @@ public class LoginWindowView : MonoBehaviour
             return;
         }
 
-        _AuthService.Email = usernameField.text;
+        //_AuthService.displayName = usernameField.text;
+        _AuthService.Email = emailField.text;
         _AuthService.Password = passwordField.text;
         _AuthService.Authenticate(Authtypes.RegisterPlayFabAccount);
     }
@@ -167,9 +169,9 @@ public class LoginWindowView : MonoBehaviour
 
     private void OnLoginClicked()
     {
-        infoText.text = string.Format("Logging in as {0} ...", usernameField.text);
+        infoText.text = string.Format("Logging in as {0} ...", emailField.text);
 
-        _AuthService.Email = usernameField.text;
+        _AuthService.Email = emailField.text;
         _AuthService.Password = passwordField.text;
         _AuthService.Authenticate(Authtypes.EmailAndPassword);
     }

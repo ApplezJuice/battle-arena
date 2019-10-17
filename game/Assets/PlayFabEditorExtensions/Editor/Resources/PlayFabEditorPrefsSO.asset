@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayFabEditorPrefsSO
   m_EditorClassIdentifier: 
   DevAccountEmail: mghayes93@gmail.com
-  DevAccountToken: fe8q67jze95caxcbh1pec1nj1zdusy1ecprazt4378zf5cjxr7ba86eiw85tihp7inqwxxa57irm6495kjrfxqa3he6nizeugc7kyt81e6aex35byf3wmde1hnx9pw3xp7kh39b6p37k1ph3ds68t1oyiexe7bsu3grxuopk4htu8h4msdicxobkujwh3nmyygapd54i
+  DevAccountToken: rc1mie9grqyouynjjki5kouxbkhhb4fjortyr7brrs74teexaqihgtzk9tbz9byhnc49dambe1bt6y1gkx6z7o18yt5pri7rtmur39fk1aaaqd6srotp6gcibcbm6bru4c3ms48jye6qh3bnkd9c4qtkj6u735ij461r364kc17z797h7za55yahqsshepf9jq1twge4
   SelectedStudio: None
   SdkPath: Assets/PlayFabSdk
   EdExPath: 

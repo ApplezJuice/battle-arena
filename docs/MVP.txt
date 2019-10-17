@@ -35,11 +35,11 @@ Concepts / Goals
     [ ] Guilds
     [ ] Stats Gains
 
-    [ ] BO3 setup - After each win, you can select a negative bonus to apply to your enemy
+    [x] BO5 setup - After each win, you can select a negative bonus to apply to your enemy
 
 ~~~~~~~~~~~~~~~~~~~~~~
 Possible Bugs?
 ~~~~~~~~~~~~~~~~~~~~~~
 I - Investigating | R - Reported | T - Testing | C - Complete 
 
-    [I] Enemy can use 3 blocked in a row which is 105 energy
+    [C] Enemy can use 3 blocked in a row which is 105 energy

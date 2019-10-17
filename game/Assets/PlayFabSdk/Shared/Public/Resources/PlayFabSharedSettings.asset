@@ -15,7 +15,7 @@ MonoBehaviour:
   TitleId: 7A5D3
   DeveloperSecretKey: IBZ638JKMXNXNNDI3ATK8BY97NBIZ6BBYZ7BOO8X1TUZOZP6ZC
   ProductionEnvironmentUrl: 
-  RequestType: 2
+  RequestType: 0
   AdvertisingIdType: 
   AdvertisingIdValue: 
   DisableAdvertising: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   DisableFocusTimeCollection: 0
   RequestTimeout: 2000
   RequestKeepAlive: 1
-  CompressApiData: 0
+  CompressApiData: 1
   LogLevel: 12
   LoggerHost: 
   LoggerPort: 0

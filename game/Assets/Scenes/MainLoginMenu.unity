@@ -120,6 +120,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &1822967 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5897045304837783096, guid: 94d2c168472e3704ebb37f604b3a9198,
+    type: 3}
+  m_PrefabInstance: {fileID: 1892773153}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37de2b09c85143a4faa673cc470f93c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &28679239
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter Username
+  m_text: Enter Email
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -415,7 +427,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 32731786}
-    characterCount: 14
+    characterCount: 11
     spriteCount: 0
     spaceCount: 1
     wordCount: 2
@@ -688,7 +700,7 @@ GameObject:
   - component: {fileID: 240602113}
   - component: {fileID: 240602112}
   m_Layer: 5
-  m_Name: Username
+  m_Name: Email
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1085,7 +1097,7 @@ GameObject:
   - component: {fileID: 407647894}
   - component: {fileID: 407647895}
   m_Layer: 5
-  m_Name: First Name
+  m_Name: Email
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1136,7 +1148,7 @@ GameObject:
   - component: {fileID: 783629182}
   - component: {fileID: 783629181}
   m_Layer: 5
-  m_Name: usernameText
+  m_Name: emailText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2170,10 +2182,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ClearPlayerPrefs: 0
-  usernameField: {fileID: 783629181}
+  emailField: {fileID: 783629181}
   passwordField: {fileID: 1764216157}
   confirmPasswordField: {fileID: 388713080}
   infoText: {fileID: 992634984}
+  registerInfoText: {fileID: 1623803421}
   basicAuth: {fileID: 1479980930}
   loginButton: {fileID: 1547002731}
   loginWithGoogle: {fileID: 1418113812}
@@ -2785,7 +2798,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnServerAuthenticated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1822967}
+        m_MethodName: LoadMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnClientAuthenticated:
     m_PersistentCalls:
       m_Calls: []
@@ -2921,7 +2945,7 @@ GameObject:
   - component: {fileID: 1623803422}
   - component: {fileID: 1623803421}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
