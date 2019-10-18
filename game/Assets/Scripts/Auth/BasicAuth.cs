@@ -2,6 +2,7 @@
 using System.Collections;
 using Mirror;
 using PlayFab;
+using System.Collections.Generic;
 
 [AddComponentMenu("Network/Authenticators/BasicAuthenticator")]
     public class BasicAuth : NetworkAuthenticator
@@ -11,6 +12,8 @@ using PlayFab;
         // set these in the inspector
         public string username;
         public string password;
+
+        private Dictionary<string, NetworkConnection> authDictionary;
 
         public class AuthRequestMessage : MessageBase
         {
