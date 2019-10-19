@@ -35,4 +35,9 @@ public class SceneButtons : MonoBehaviour
     {
         SceneLoader.Load(SceneLoader.Scene.RegisterMenu);
     }
+
+    public void LoadDiscord()
+    {
+        Application.OpenURL("https://discord.gg/aAWZgAa");
+    }
 }

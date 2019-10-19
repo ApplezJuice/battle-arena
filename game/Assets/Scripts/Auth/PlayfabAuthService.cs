@@ -450,15 +450,17 @@ public class PlayFabAuthService
             _sessionTicket = result.SessionTicket;
 
             //check if we want to get this callback directly or send to event subscribers.
-            if (callback == null && OnLoginSuccess != null)
+            //if (callback == null && OnLoginSuccess != null)
+            if (OnLoginSuccess != null)
             {
                 //report login result back to the subscriber
                 OnLoginSuccess.Invoke(result);
-            }else if (callback != null)
-            {
-                //report login result back to the caller
-                callback.Invoke(result);
             }
+            //else if (callback != null)
+            //{
+                //report login result back to the caller
+            //    callback.Invoke(result);
+            //}
         }, (error) => {
 
             //report errro back to the subscriber
