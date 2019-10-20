@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class SceneButtons : MonoBehaviour
 {
+
+
+    public GameObject chatBox;
+
+    public delegate void OpenChatBoxDelegate();
+    public static event OpenChatBoxDelegate OnOpenChatBoxDelegate;
+
     public void LoadMatchScene()
     {
         SceneLoader.Load(SceneLoader.Scene.match);
@@ -18,7 +25,7 @@ public class SceneButtons : MonoBehaviour
     public void LoadMainMenu()
     {
         // menu between games, after login
-        SceneLoader.Load(SceneLoader.Scene.Menu);
+        SceneLoader.Load(SceneLoader.Scene.MainLobby);
     }
 
     public void LoadMainLoginMenu()
@@ -39,5 +46,16 @@ public class SceneButtons : MonoBehaviour
     public void LoadDiscord()
     {
         Application.OpenURL("https://discord.gg/aAWZgAa");
+    }
+
+    public void OpenChat()
+    {
+        chatBox.SetActive(true);
+        //OnOpenChatBoxDelegate.Invoke();
+    }
+
+    public void HideChat()
+    {
+        chatBox.SetActive(false);
     }
 }

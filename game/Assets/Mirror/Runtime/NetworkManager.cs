@@ -255,7 +255,7 @@ namespace Mirror
             // remove on client build
 
             // remove on client build
-            StartServer();
+            //StartServer();
             // remove on client build
             // remove on client build
             // remove on client build

@@ -422,7 +422,7 @@ public class PlayFabAuthService
     {
 
     }
-
+    
 
     private void SilentlyAuthenticate(System.Action<LoginResult> callback = null)
     {

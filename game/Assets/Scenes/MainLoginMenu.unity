@@ -120,18 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &1822967 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5897045304837783096, guid: 94d2c168472e3704ebb37f604b3a9198,
-    type: 3}
-  m_PrefabInstance: {fileID: 1892773153}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37de2b09c85143a4faa673cc470f93c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &28679239
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,7 +2169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a80a462686f0be409f342a72a755cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClearPlayerPrefs: 0
+  ClearPlayerPrefs: 1
   emailField: {fileID: 783629181}
   passwordField: {fileID: 1764216157}
   confirmPasswordField: {fileID: 388713080}
@@ -2758,16 +2746,16 @@ MonoBehaviour:
   runInBackground: 1
   startOnHeadless: 1
   serverTickRate: 30
-  showDebugMessages: 0
-  offlineScene: 
-  onlineScene: 
+  showDebugMessages: 1
+  offlineScene: MainLoginMenu
+  onlineScene: MainLobby
   transport: {fileID: 1479980927}
-  networkAddress: localhost
-  maxConnections: 2
+  networkAddress: 3.231.184.172
+  maxConnections: 1000
   authenticator: {fileID: 1479980930}
-  playerPrefab: {fileID: 3143776357796329701, guid: b21670d8b5a168b478b77daf1dc40b21,
+  playerPrefab: {fileID: 8754969987080389804, guid: 3dec1589af2964d4d874f6fecc6b2038,
     type: 3}
-  autoCreatePlayer: 0
+  autoCreatePlayer: 1
   playerSpawnMethod: 1
   spawnPrefabs: []
 --- !u!4 &1479980929
@@ -2798,18 +2786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnServerAuthenticated:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1822967}
-        m_MethodName: LoadMainMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnClientAuthenticated:
     m_PersistentCalls:
       m_Calls: []
