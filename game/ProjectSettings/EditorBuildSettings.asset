@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/match.unity
     guid: 38a43897055daf848ad1dc8c81114c16
+  - enabled: 1
+    path: Assets/Scenes/Container.unity
+    guid: 2facf59820697534fa6ffdcacda6a4df
   m_configObjects: {}

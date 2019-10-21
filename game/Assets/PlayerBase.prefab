@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 110529971044412220}
   - component: {fileID: 9181593151623824875}
   - component: {fileID: 5692823343347134203}
-  - component: {fileID: 3982758373797062976}
+  - component: {fileID: 4112941191307963372}
   m_Layer: 0
   m_Name: PlayerBase
   m_TagString: Untagged
@@ -48,7 +48,7 @@ MonoBehaviour:
   serverOnly: 0
   localPlayerAuthority: 1
   m_AssetId: 
-  m_SceneId: 3575829187
+  m_SceneId: 33596284
 --- !u!114 &5692823343347134203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,8 +63,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  playerCanvas: {fileID: 0}
---- !u!114 &3982758373797062976
+  subScene:
+  - MainLobby
+  - match
+--- !u!114 &4112941191307963372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

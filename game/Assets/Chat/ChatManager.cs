@@ -6,6 +6,13 @@ using Mirror;
 using UnityEngine.SceneManagement;
 using System;
 
+public struct ChatMessage
+{
+    public string sender;
+    public string messsage;
+}
+
+class SnycListChatMessages : SyncList<ChatMessage> { }
 public class ChatManager : NetworkBehaviour
 {
     public Transform chatContent;
@@ -16,85 +23,142 @@ public class ChatManager : NetworkBehaviour
 
     public Button send;
 
+    public Text chatText;
+
+    readonly SnycListChatMessages chatMessages = new SnycListChatMessages();
+
+    [Command]
+    public void CmdNewMessage(string msg)
+    {
+        if (msg == "" || msg == " " || msg == null)
+        {
+            return;
+        }
+
+        ChatMessage message = new ChatMessage
+        {
+            sender = connectionToClient.identity.netId.ToString(),
+            messsage = msg
+        };
+
+
+        //chatMessages.Add(message);
+        OnAddChatMessage(message);
+        //RpcChatMessage(message);
+    }
+
+    [ClientRpc]
+    void RpcUpdateChat()
+    {
+        chatText.text = "";
+        foreach (ChatMessage msg in chatMessages)
+        {
+            chatText.text += "[" + msg.sender + "] - " + msg.messsage + "\n";
+        }
+    }
+
+    [Command]
+    void CmdCallUpdateChat()
+    {
+        RpcUpdateChat();
+    }
+
+    [Server]
+    void OnAddChatMessage(ChatMessage message)
+    {
+        chatMessages.Add(message);
+    }
+
     private void Start()
     {
-        InitializeLobbyCanvas();
-        //SceneManager.sceneLoaded += OnSceneLoaded;
-
-        //SceneButtons.OnOpenChatBoxDelegate += InitializeLobbyCanvas;
+        if (!isLocalPlayer && !isServer)
+        {
+            return;
+        }
+        chatMessages.Callback += OnUpdateChat;
+        //InitializeLobbyCanvas();
     }
 
-    //private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    //{
-    //    if (arg0.buildIndex == 1)
-    //    {
-    //        InitializeLobbyCanvas();
-    //    }
-    //}
-
-    private void Update()
+    private void OnUpdateChat(SyncList<ChatMessage>.Operation op, int itemIndex, ChatMessage item)
     {
-        //if (chatPanel == null || send == null || chatContent == null)
-        //{
-        //    InitializeLobbyCanvas();
-        //}
+        switch (op)
+        {
+            case SnycListChatMessages.Operation.OP_ADD:
+                // index is where it got added in the list
+                // item is the new item
+
+
+                //GameObject newMessage = Instantiate(chatMessagePrefab, chatContent);
+                //Text content = newMessage.GetComponent<Text>();
+
+                //content.text = string.Format(content.text, item.sender, item.messsage);
+                Debug.Log("Message from: " + item.sender + " | Message: " + item.messsage);
+                chatText.text = "";
+                foreach (ChatMessage msg in chatMessages)
+                {
+                    chatText.text += "[" + msg.sender + "] - " + msg.messsage + "\n";
+                }
+                //CmdCallUpdateChat();
+
+                break;
+            case SnycListChatMessages.Operation.OP_CLEAR:
+                // list got cleared
+                break;
+            case SnycListChatMessages.Operation.OP_INSERT:
+                // index is where it got added in the list
+                // item is the new item
+                break;
+            case SnycListChatMessages.Operation.OP_REMOVE:
+                // index is where it got removed in the list
+                // item is the item that was removed
+                break;
+            case SnycListChatMessages.Operation.OP_REMOVEAT:
+                // index is where it got removed in the list
+                // item is the item that was removed
+                break;
+            case SnycListChatMessages.Operation.OP_SET:
+                // index is the index of the item that was updated
+                // item is the previous item
+                break;
+            case SnycListChatMessages.Operation.OP_DIRTY:
+                // index is the index of the item that was updated
+                // item is the previous item
+                break;
+        }
     }
 
-    private void InitializeLobbyCanvas()
+    public void InitializeLobbyCanvas()
     {
         chatContent = GameObject.Find("Content").transform;
         inputField = GameObject.Find("ChatInput").GetComponent<InputField>();
         chatPanel = GameObject.Find("Chat");
         send = GameObject.Find("Send").GetComponent<Button>();
+        chatText = GameObject.Find("ChatText").GetComponent<Text>();
 
         send.onClick.AddListener(ChatSendButtonPressed);
 
-        //chatPanel.SetActive(false);
-        GameObject.Find("SceneManager").GetComponent<SceneButtons>().HideChat();
-    }
-
-    public void ValueChanged()
-    {
-        if (inputField.text.Contains("\n"))
+        chatText.text = "";
+        foreach (ChatMessage msg in chatMessages)
         {
-            UserSendingChat(inputField.text);
-            Debug.Log(inputField.text);
+            chatText.text += "[" + msg.sender + "] - " + msg.messsage + "\n";
         }
+        //chatPanel.SetActive(false);
+        //GameObject.Find("SceneManager").GetComponent<SceneButtons>().HideChat();
     }
 
     public void ChatSendButtonPressed()
     {
         string msg = inputField.text;
-        Debug.Log("Message: " + msg);
-        CmdSendChatMessage("sendbutton", msg);
-    }
-
-    private void UserSendingChat(string msg)
-    {
-        if (!isServer)
-        {
-            CmdSendChatMessage("ApplezTest", "test");
-        }
-    }
-
-    [Command]
-    void CmdSendChatMessage(string username, string msg)
-    {
-        RpcChatMessage("ApplezTest", msg);
+        CmdNewMessage(msg);
+        inputField.text = "";
     }
 
     [ClientRpc]
-    void RpcChatMessage(string username, string msg)
+    void RpcChatMessage(ChatMessage message)
     {
-        if (string.IsNullOrEmpty(msg))
-        {
-            // The message was empty, so do not display the message.
-            return;
-        }
-
         GameObject newMessage = Instantiate(chatMessagePrefab, chatContent);
         Text content = newMessage.GetComponent<Text>();
 
-        content.text = string.Format(content.text, username, msg);
+        content.text = string.Format(content.text, message.sender, message.messsage);
     }
 }

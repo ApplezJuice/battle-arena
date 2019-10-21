@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class SceneButtons : MonoBehaviour
+public class SceneButtons : NetworkBehaviour
 {
 
 
@@ -11,9 +12,14 @@ public class SceneButtons : MonoBehaviour
     public delegate void OpenChatBoxDelegate();
     public static event OpenChatBoxDelegate OnOpenChatBoxDelegate;
 
+    [Scene]
+    [Tooltip("Assign the sub-scene to load for this zone")]
+    public string subScene;
+
     public void LoadMatchScene()
     {
-        SceneLoader.Load(SceneLoader.Scene.match);
+        NetworkClient.connection.identity.GetComponent<playerBase>().CmdFindMatch(NetworkClient.connection.identity);
+        //SceneLoader.Load(SceneLoader.Scene.match);
     }
 
     public void QuitGame()
@@ -25,12 +31,14 @@ public class SceneButtons : MonoBehaviour
     public void LoadMainMenu()
     {
         // menu between games, after login
-        SceneLoader.Load(SceneLoader.Scene.MainLobby);
+        //SceneLoader.Load(SceneLoader.Scene.MainLobby);
+        NetworkClient.connection.identity.GetComponent<playerBase>().CmdLoadMainMenuAfterMatch(NetworkClient.connection.identity);
     }
 
     public void LoadMainLoginMenu()
     {
-        SceneLoader.Load(SceneLoader.Scene.MainLoginMenu);
+        //SceneLoader.Load(SceneLoader.Scene.MainLoginMenu);
+        NetworkClient.connection.identity.GetComponent<playerBase>().CmdLoadMainMenuAfterMatch(NetworkClient.connection.identity);
     }
 
     public void LoadLoginScreen()
@@ -51,6 +59,7 @@ public class SceneButtons : MonoBehaviour
     public void OpenChat()
     {
         chatBox.SetActive(true);
+        NetworkClient.connection.identity.GetComponent<ChatManager>().InitializeLobbyCanvas();
         //OnOpenChatBoxDelegate.Invoke();
     }
 
