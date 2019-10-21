@@ -28,16 +28,11 @@ public class ChatManager : NetworkBehaviour
     readonly SnycListChatMessages chatMessages = new SnycListChatMessages();
 
     [Command]
-    public void CmdNewMessage(string msg)
+    public void CmdNewMessage(NetworkIdentity networkIdentity, string msg)
     {
-        if (msg == "" || msg == " " || msg == null)
-        {
-            return;
-        }
-
         ChatMessage message = new ChatMessage
         {
-            sender = connectionToClient.identity.netId.ToString(),
+            sender = networkIdentity.ToString(),
             messsage = msg
         };
 
@@ -71,10 +66,10 @@ public class ChatManager : NetworkBehaviour
 
     private void Start()
     {
-        if (!isLocalPlayer && !isServer)
-        {
-            return;
-        }
+        //if (!isLocalPlayer && !isServer)
+        //{
+        //    return;
+        //}
         chatMessages.Callback += OnUpdateChat;
         //InitializeLobbyCanvas();
     }
@@ -127,29 +122,33 @@ public class ChatManager : NetworkBehaviour
         }
     }
 
-    public void InitializeLobbyCanvas()
-    {
-        chatContent = GameObject.Find("Content").transform;
-        inputField = GameObject.Find("ChatInput").GetComponent<InputField>();
-        chatPanel = GameObject.Find("Chat");
-        send = GameObject.Find("Send").GetComponent<Button>();
-        chatText = GameObject.Find("ChatText").GetComponent<Text>();
+    //public void InitializeLobbyCanvas()
+    //{
+    //    chatContent = GameObject.Find("Content").transform;
+    //    inputField = GameObject.Find("ChatInput").GetComponent<InputField>();
+    //    chatPanel = GameObject.Find("Chat");
+    //    send = GameObject.Find("Send").GetComponent<Button>();
+    //    chatText = GameObject.Find("ChatText").GetComponent<Text>();
 
-        send.onClick.AddListener(ChatSendButtonPressed);
+    //    send.onClick.AddListener(ChatSendButtonPressed);
 
-        chatText.text = "";
-        foreach (ChatMessage msg in chatMessages)
-        {
-            chatText.text += "[" + msg.sender + "] - " + msg.messsage + "\n";
-        }
-        //chatPanel.SetActive(false);
-        //GameObject.Find("SceneManager").GetComponent<SceneButtons>().HideChat();
-    }
+    //    chatText.text = "";
+    //    foreach (ChatMessage msg in chatMessages)
+    //    {
+    //        chatText.text += "[" + msg.sender + "] - " + msg.messsage + "\n";
+    //    }
+    //    //chatPanel.SetActive(false);
+    //    //GameObject.Find("SceneManager").GetComponent<SceneButtons>().HideChat();
+    //}
 
     public void ChatSendButtonPressed()
     {
         string msg = inputField.text;
-        CmdNewMessage(msg);
+        if (msg != "" || msg != null || msg != " ")
+        {
+            NetworkIdentity identity = NetworkClient.connection.identity;
+            CmdNewMessage(identity, msg);
+        }
         inputField.text = "";
     }
 

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 110529971044412220}
   - component: {fileID: 9181593151623824875}
   - component: {fileID: 5692823343347134203}
-  - component: {fileID: 4112941191307963372}
   m_Layer: 0
   m_Name: PlayerBase
   m_TagString: Untagged
@@ -48,7 +47,7 @@ MonoBehaviour:
   serverOnly: 0
   localPlayerAuthority: 1
   m_AssetId: 
-  m_SceneId: 33596284
+  m_SceneId: 3530470200
 --- !u!114 &5692823343347134203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,23 +65,3 @@ MonoBehaviour:
   subScene:
   - MainLobby
   - match
---- !u!114 &4112941191307963372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8754969987080389804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36b0f90f248dd3645a852c95f6425551, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  chatContent: {fileID: 0}
-  chatMessagePrefab: {fileID: 6661357360385437054, guid: 2b93375eaebe1fd41b14123c8062a82e,
-    type: 3}
-  inputField: {fileID: 0}
-  chatPanel: {fileID: 0}
-  send: {fileID: 0}

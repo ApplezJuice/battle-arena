@@ -59,7 +59,7 @@ public class SceneButtons : NetworkBehaviour
     public void OpenChat()
     {
         chatBox.SetActive(true);
-        NetworkClient.connection.identity.GetComponent<ChatManager>().InitializeLobbyCanvas();
+        //NetworkClient.connection.identity.GetComponent<ChatManager>().InitializeLobbyCanvas();
         //OnOpenChatBoxDelegate.Invoke();
     }
 

@@ -14,7 +14,7 @@ namespace Mirror.Examples.Additive
         {
             base.Start();
             // Server Start
-            //StartServer();
+            StartServer();
             // Server Start
         }
 
